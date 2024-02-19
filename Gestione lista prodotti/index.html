@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestione Prodotti</title>
+    <script>
+        var prodotti = [];
+
+        function inserisciProdotto() {
+            var codice = prompt("Inserisci il codice del prodotto:");
+            for(var i = 0; i < prodotti.length; i++) {
+                if(prodotti[i].codice === codice) {
+                    alert("Codice prodotto già esistente!");
+                    return;
+                }
+            }
+            var nome = prompt("Inserisci il nome del prodotto:");
+            var descrizione = prompt("Inserisci la descrizione del prodotto:");
+            var prezzo = prompt("Inserisci il prezzo del prodotto:");
+            prodotti.push({codice: codice, nome: nome, descrizione: descrizione, prezzo: prezzo});
+            alert("Prodotto inserito con successo!");
+            mostraProdotti();
+        }
+
+        function rimuoviProdotto() {
+            var codice = prompt("Inserisci il codice del prodotto da rimuovere:");
+            for(var i = 0; i < prodotti.length; i++) {
+                if(prodotti[i].codice === codice) {
+                    prodotti.splice(i, 1);
+                    alert("Prodotto rimosso con successo!");
+                    mostraProdotti();
+                    return;
+                }
+            }
+            alert("Codice prodotto non trovato!");
+        }
+
+        function ordinaProdotti() {
+            prodotti.sort(function(a, b) {
+                return a.codice.localeCompare(b.codice);
+            });
+            alert("Prodotti ordinati con successo!");
+            mostraProdotti();
+        }
+
+        function mostraProdotti() {
+            var contenitore = document.getElementById('contenitore-prodotti');
+            contenitore.innerHTML = '';
+            for(var i = 0; i < prodotti.length; i++) {
+                var prodotto = document.createElement('p');
+                prodotto.textContent = prodotti[i].codice + ': ' + prodotti[i].nome + ', ' + prodotti[i].descrizione + ', ' + prodotti[i].prezzo;
+                contenitore.appendChild(prodotto);
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="inserisciProdotto()">Inserisci Prodotto</button>
+    <button onclick="rimuoviProdotto()">Rimuovi Prodotto</button>
+    <button onclick="ordinaProdotti()">Ordina Prodotti</button>
+    <div id="contenitore-prodotti"></div>
+</body>
+</html>
